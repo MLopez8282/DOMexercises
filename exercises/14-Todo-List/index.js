@@ -1,14 +1,22 @@
 // Your code here
-//keycode 13, enter
 let input = document.querySelector("#addToDo");
-let list = document.querySelector("#list");
-
-input.addEventListener("keyup", function(e) {
-	if (e.keyCode === 13) {
-		e.preventDefault();
-		let element = document.createElement("LI");
-		element.innerHTML = `<span><i class="fa fa-trash"></i></span>${input.value}`;
-		list.appendChild(element);
-		input.value = "";
+input.addEventListener("keyup", addTodo);
+let ul = document.querySelector("ul");
+function deleteTodo(event) {
+	var tasks = document.querySelectorAll(".fa-trash");
+	tasks.forEach((item, index) => {
+		item.addEventListener("click", function(event) {
+			let deletedItem = event.target.parentNode.parentNode;
+			deletedItem.parentNode.removeChild(deletedItem);
+		});
+	});
+}
+function addTodo(event) {
+	if (event.keyCode == 13) {
+		let task = event.target.value;
+		ul.innerHTML += `<li><span><i class="fa fa-trash"></i></span> ${task}</li>`;
+		deleteTodo();
+		console.log(event);
 	}
-});
+}
+deleteTodo();
